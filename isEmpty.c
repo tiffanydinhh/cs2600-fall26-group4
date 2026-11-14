@@ -1,3 +1,10 @@
+/* if (isEmpty(input) == 1) {   */
+/*     printf("input is empty") */
+/* }                            */
+/* else {                       */
+/*     //calculate wpm, etc.    */
+/* }                            */
+
 /************************************************************/
 /* Method: isEmpty                                          */
 /* Purpose: Checks if the user's input is empty, contains   */
