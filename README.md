@@ -1,4 +1,4 @@
-# Wordle - CS 2640 Final Project
+# Speed Typing Test - CS 2600 Final Project in C
 ## Group Members: Tyler Carrasco, Tiffany Dinh, Brandon Doan, Kendan Phan, Angela Salcido
 
 ## Purpose
