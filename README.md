@@ -7,4 +7,5 @@ This project is based on a speed typing test. Its purpose is to allow users to m
 ## How to Use
 
 ## Features
-* 
+* Users are prompted with a main menu to start the game or exit the program
+* Program displays paragraph for user to type
