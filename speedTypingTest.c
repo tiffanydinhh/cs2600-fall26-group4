@@ -35,7 +35,7 @@ int main() {
 
   double elapsedTime = 0;
 
-  int ch; // ch stores last character user inputs
+  int ch; // ch stores next character from user input
 
   // do while loop for main menu
   do {
@@ -52,7 +52,7 @@ int main() {
 
     ch = getchar(); // get next character from user input after scanf()
 
-    // if the last character is not a new line, then set the menuInput equal to 0 and clear input buffer
+    // if the next character is not a new line, then set the menuInput equal to 0 and clear input buffer
     if (ch != '\n') {
       menuInput = 0;
       while ((ch = getchar()) != '\n');
@@ -185,7 +185,7 @@ int main() {
 	scanf(" %c", &replayInput);
         ch = getchar(); // get next character from user input after scanf()
 
-    // if the last character is not a new line, then set the replayInput equal to 0 and clear input buffer
+    // if the next character is not a new line, then set the replayInput equal to 0 and clear input buffer
     if (ch != '\n') {
       replayInput = 0;
       while ((ch = getchar()) != '\n');
