@@ -22,7 +22,7 @@ int main() {
   
   char progStr[1500];
 
-  char userStr[1000]; // store user string input that can store up to 1000 characters char userStr[500]; // store user string input
+  char userStr[1000]; // store user string input that can store up to 1000 characters char userStr[500];
 
   int correctNumChar = 0;
   double wpm = 0;
@@ -34,6 +34,8 @@ int main() {
   int j = 0; // j keeps track of userStr char position
 
   double elapsedTime = 0;
+
+  int ch; // ch stores last character user inputs
 
   // do while loop for main menu
   do {
@@ -47,8 +49,16 @@ int main() {
     printf("Please enter a number from 1 to 2: ");
 
     scanf("%d", &menuInput); // user's menu input will be stored in menuInput
-    getchar(); // clear left over return key from user menu input
 
+    ch = getchar(); // get next character from user input after scanf()
+
+    // if the last character is not a new line, then set the menuInput equal to 0 and clear input buffer
+    if (ch != '\n') {
+      menuInput = 0;
+      while ((ch = getchar()) != '\n');
+    }
+
+    // if menuInput is not 1 or 2, then it is an invalid input
     if (menuInput != 1 && menuInput != 2) {
       printf("\nInvalid input, please try again.\n");
     }
@@ -72,17 +82,15 @@ int main() {
 
       // if paragraphInput successfully took in user input
       if (paragraphInput(progStr, userStr, sizeof(userStr), &elapsedTime) == 0) {
-	      printf("Could not get user input");
-	      return 1;
+	printf("Could not get user input");
+	return 1;
       }
 
       // if user enters an empty input
       if (isEmpty(userStr) == 1) {
-	      printf("input is empty\n");
-	      return 0;
+	printf("input is empty\n");
+	return 0;
       }
-
-      // this code below will be considered inside the 'if menuInput == 1'
 
       // find length of string for progStr and userStr
       int progStrLength = strlen(progStr);
@@ -173,9 +181,15 @@ int main() {
 
       // do while loop for replay menu to ask if user wants to play again
       do {
-	      printf("Would you like to try again? (Y/N): ");
-	      scanf(" %c", &replayInput);
-	      getchar(); // clear left over return key from user replay menu input
+	printf("Would you like to try again? (Y/N): ");
+	scanf(" %c", &replayInput);
+        ch = getchar(); // get next character from user input after scanf()
+
+    // if the last character is not a new line, then set the replayInput equal to 0 and clear input buffer
+    if (ch != '\n') {
+      replayInput = 0;
+      while ((ch = getchar()) != '\n');
+    }
 
       } while (replayInput != 'Y' && replayInput != 'y' && replayInput != 'N' && replayInput != 'n');
 
