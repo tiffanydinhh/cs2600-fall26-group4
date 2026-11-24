@@ -1,23 +1,26 @@
-// CS 26000 Systems Programming
+// CS 2600 Systems Programming
 // Tyler Carrasco, Tiffany Dinh, Brandon Doan, Kendan Phan, Angela Salcido
 // Final Project in C
 // C program that replicates a speed typing test
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <stddef.h> //For size_t
 #include <time.h>
 #include "start_timer.h"
 
 int paragraphInput(const char paragraph[], char userInput[], size_t inputSize, double *elapsedTime);
 int isEmpty(const char input[]);
+void generateParagraph(char paragraph[], int numWords);
 
 int main() {
 
-  int menuInput; // ints 1 or 2 will be stored in menuInput
+  srand(time(NULL)); // Seed the random number generator
+  int menuInput = 0; // ints 1 or 2 will be stored in menuInput
   char replayInput; // store user input for replay menu
   
-  const char progStr[] = "Half the world was pulling on his colors, as nights turned into days top the hours. A glow was coming down, coming down. I don't know why, but it felt like a tiger striped sky.";
+  char progStr[1500];
 
   char userStr[1000]; // store user string input that can store up to 1000 characters char userStr[500]; // store user string input
 
@@ -35,10 +38,6 @@ int main() {
   // do while loop for main menu
   do {
 
-    if (menuInput != '1' && menuInput != '2') {
-      printf("\nInvalid input, please try again.\n");
-    }
-
     printf("* * * WELCOME TO OUR SPEED TYPING TEST! * * *\n\n");
     printf("~~~~~~MAIN MENU~~~~~~\n");
     printf("You will be given a paragraph to copy, and your speed and accuracy will be measured.\n");
@@ -49,6 +48,10 @@ int main() {
 
     scanf("%d", &menuInput); // user's menu input will be stored in menuInput
     getchar(); // clear left over return key from user menu input
+
+    if (menuInput != 1 && menuInput != 2) {
+      printf("\nInvalid input, please try again.\n");
+    }
 
   } while (menuInput != 1 && menuInput != 2);
 
@@ -65,16 +68,18 @@ int main() {
       int j = 0;
       double elapsedTime = 0;
 
+      generateParagraph(progStr, 25); // generating a paragraph with 25 words
+
       // if paragraphInput successfully took in user input
       if (paragraphInput(progStr, userStr, sizeof(userStr), &elapsedTime) == 0) {
-	printf("Could not get user input");
-	return 1;
+	      printf("Could not get user input");
+	      return 1;
       }
 
       // if user enters an empty input
       if (isEmpty(userStr) == 1) {
-	printf("input is empty\n");
-	return 0;
+	      printf("input is empty\n");
+	      return 0;
       }
 
       // this code below will be considered inside the 'if menuInput == 1'
@@ -168,9 +173,9 @@ int main() {
 
       // do while loop for replay menu to ask if user wants to play again
       do {
-	printf("Would you like to try again? (Y/N): ");
-	scanf(" %c", &replayInput);
-	getchar(); // clear left over return key from user replay menu input
+	      printf("Would you like to try again? (Y/N): ");
+	      scanf(" %c", &replayInput);
+	      getchar(); // clear left over return key from user replay menu input
 
       } while (replayInput != 'Y' && replayInput != 'y' && replayInput != 'N' && replayInput != 'n');
 
@@ -203,7 +208,7 @@ double getTime(void) {
 int paragraphInput(const char paragraph[], char userInput[], size_t inputSize, double *elapsedTime) {
   
   printf("\nType the following text: \n\n%s\n\n", paragraph);
-  printf("Typing: ");
+  printf("Typing:\n");
   fflush(stdout);
 
   double start = getTime();
@@ -241,4 +246,52 @@ int isEmpty(const char input[]) {
   // once the while loop terminates at the end of the char array
   return 1;
 
+}
+
+void generateParagraph(char paragraph[], int numWords) {
+
+  FILE *file = fopen("words.txt", "r");
+
+  char words[1500][50];
+  int used[1500] = {0};
+  int count = 0;
+
+  paragraph[0] = '\0';
+
+  if (file == NULL) {
+    printf("Unable to open words.txt\n");
+    return;
+  }
+
+  // Read words from the file
+  while (count < 1500 && fscanf(file, "%49s", words[count]) == 1) {
+    count++;
+  }
+
+  fclose(file);
+
+  if (numWords > count) {
+    numWords = count;
+  }
+
+  // Randomly select words
+  for (int i = 0; i < numWords; i++) {
+
+    int index = rand() % count;
+
+    // Prevent duplicates
+    while (used[index] == 1) {
+      index = rand() % count;
+    }
+
+    used[index] = 1;
+
+    // Add to paragraph[]
+    strcat(paragraph, words[index]);
+
+    // Space after each word except the last one
+    if (i != numWords - 1) {
+      strcat(paragraph, " ");
+    }
+  }
 }
