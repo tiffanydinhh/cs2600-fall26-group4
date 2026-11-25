@@ -88,7 +88,7 @@ int main() {
 
       // if user enters an empty input
       if (isEmpty(userStr) == 1) {
-	printf("input is empty\n");
+	printf("Input is empty. Please start the program again.\n");
 	return 0;
       }
 
@@ -197,7 +197,7 @@ int main() {
 
     // if user chooses 'N' or 'n' during replay menu
     if (replayInput == 'N' || replayInput == 'n') {
-      printf("Thanks for playing! Goodbye.\n");
+      printf("\nThanks for playing! Goodbye.\n");
     }
     
   }
