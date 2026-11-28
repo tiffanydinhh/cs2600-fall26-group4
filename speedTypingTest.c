@@ -139,6 +139,7 @@ int main() {
 
 	else if ((j + 1 < userStrLength) && (userStr[j + 1] == progStr[i])) {
 	  j++; // increment userStr position
+	  extraNumChar++; // increment extraNumChar
 	} 
 
 	// else ordinary incorrect character
